@@ -1,0 +1,75 @@
+:host{
+
+    ::ng-deep.mat-checkbox-inner-container{
+        margin-left: 5px;
+        }
+
+    ::ng-deep.mat-form-field-appearance-fill .mat-form-field-infix {
+        text-align: start;
+        }
+}
+.meeting_creation_form_card{
+    width: 1025px;
+    height: 672px;
+    margin: auto;
+    direction: rtl;
+}
+p{
+    font-size: 16px;
+}
+.top_section{
+    height: 30px;
+    background-color: gray;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+   
+}
+.bottom_section{
+    width: 1025px;
+    height: 561px;
+    display: flex;
+    flex-direction: row;
+   
+}
+
+.right_section{
+    flex: 1;
+     background-color: gray;
+    }
+.middle_section{
+    flex: 1;
+     background-color: rgb(179, 179, 179);
+    }
+.left_section{
+    flex: 1;
+     background-color: gray;
+    }
+
+    .header_boldTxt{
+        font-weight: bold;
+        font-size: 19px;
+        
+    }
+    .boldTxt{
+        font-weight: bold;
+    }
+    .checkboxDiv{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .clendarPlaceholder{
+        height: 200px;
+        background-color:gray;
+    }
+    .meetingResults{
+        height: 251px;
+        overflow-y: scroll;
+        margin-top: 10px;
+        background-color: gray;
+
+    }
+
