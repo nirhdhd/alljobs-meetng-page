@@ -1,24 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { filter, map, startWith } from 'rxjs/operators';
+import { FormGroup, FormControl, FormArray, AbstractControl, Validators } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, startWith } from 'rxjs/operators';
 
 //interfaces
 interface Meeting {
   label: string;
 }
-
 interface Food {
   value: string;
   viewValue: string;
 }
-
 interface FilterData {
   meetingType: boolean[];
   value: string;
   viewValue: string;
 }
-
 
 @Component({
   selector: 'app-calendar-form-page',
@@ -26,66 +23,98 @@ interface FilterData {
   styleUrls: ['./calendar-form-page.component.scss']
 })
 export class CalendarFormPageComponent implements OnInit {
+  form: FormGroup = new FormGroup({
+    types: new FormControl([]),
+    features: new FormControl([]),
+    adviser: new FormControl(''),
+    places: new FormControl([])
+    //name: new FormControl('', [Validators.required])
+  });
+
+  selectedProduct: string;
+  places: any[];
+
+  selectedProduct$: Observable<any> = of({
+    id: 1,
+    name: 'שדרוג קורות חיים'
+  });
+
+  places$: Observable<any> = of([
+    {
+      id: 1,
+      name: 'נתניה'
+    },
+    {
+      id: 2,
+      name: 'חדרה'
+    }
+    ,
+    {
+      id: 3,
+      name: 'רעננה'
+    }]
+  )
 
   constructor() { }
 
-  foods: Food[] = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' }
-  ];
+  get types(): AbstractControl {
+    return this.form.get('types');
+  }
+  get features(): AbstractControl {
+    return this.form.get('features');
+  }
+  get adviser(): AbstractControl {
+    return this.form.get('adviser');
+  }
 
+  featureList: any[] = [
+    { id: 0, name: 'שדרוג עברית' },
+    { id: 1, name: 'שדרוג אנגלית' },
+    { id: 2, name: 'שדרוג הייטק' }
+  ];
   selectedTopping: any[] = [];
-
   productName: string;
-
-  filterData: FilterData = {
-    meetingType: [false, false, false],
-    value: '',
-    viewValue: ''
-  };
-
-  toppings = new FormControl();
-
+  //toppings = new FormControl();
   advisers: string[] = [
-    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
-
+    'אביב',
+    'אביבה',
+    'אביה',
+    'בינה',
+    'בל',
+    'בלה',
+    'גאולה',
+    'גאיה',
+    'גבריאל',
   ];
-
-  // toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-  //try
-  toppingList: any[] = [{ id: 0, name: '111' }, { id: 1, name: '222' }, { id: 2, name: '333' }];
 
 
   ngOnInit(): void {
     this.productName = "choosenProductName";
+    this.types.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    ).subscribe(console.log);
+    this.features.valueChanges.subscribe(console.log);
+    this.adviser.valueChanges.subscribe(console.log);
+    this.selectedProduct$.subscribe(x => { this.selectedProduct = x.name });
+    //מוצר נבחר
+    this.places$.subscribe(x => { this.places = x });
 
   }
 
-  foo(val) {
-    this.filterData.meetingType[val] = !this.filterData.meetingType[val];
-    //console.log(this.filterData);
-
-  }
-
-
-  addFoo(e: any, id: string) {
-    console.log("im hereeee");
-    if (e.source._selected == true) {
-      this.selectedTopping.push(id);
-      console.log(this.selectedTopping);
+  onChangeTypes(value) {
+    const types = [...this.types.value];
+    if (types.includes(value)) {
+      this.types.setValue(types.filter(t => t !== value));
+    } else {
+      this.types.setValue([...types, value]);
     }
-    else {
-
-      this.selectedTopping = this.selectedTopping.filter(m => m != id);
-      console.log(this.selectedTopping);
-    }
-
-
   }
 
-
-
+  submit() {
+    console.log(this.form.valid);
+    console.log(this.form.value);
+  }
 
 
 }

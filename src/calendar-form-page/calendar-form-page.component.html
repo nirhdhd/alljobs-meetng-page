@@ -1,106 +1,129 @@
-<mat-card class="meeting_creation_form_card">
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-card class="meeting_creation_form_card">
 
-    <mat-card class="top_section">
+        <mat-card class="top_section">
 
-        <p style="font-size: 19px;">תאריך פגישה:</p>
-        &nbsp;
-        <p class="header_boldTxt">10/09/2020</p>
+            <p style="font-size: 19px;">תאריך פגישה:</p>
+            &nbsp;
+            <p class="header_boldTxt">10/09/2020</p>
 
-        <img style="width: 10px;margin-right: 22px;margin-left: 22px;" src="../assets/images/dot.svg">
+            <img style="width: 10px;margin-right: 22px;margin-left: 22px;" src="../assets/images/dot.svg">
 
-        <p style="font-size: 19px;">שעה:</p>
-        &nbsp;
-        <p class="header_boldTxt">09:30</p>
+            <p style="font-size: 19px;">שעה:</p>
+            &nbsp;
+            <p class="header_boldTxt">09:30</p>
 
-        <img style="width: 10px;margin-right: 22px;margin-left: 22px;" src="../assets/images/dot.svg">
+            <img style="width: 10px;margin-right: 22px;margin-left: 22px;" src="../assets/images/dot.svg">
 
-        <p style="font-size: 19px;">שם היועצת:</p>
-        &nbsp;
-        <p class="header_boldTxt">מיכל ינאי</p>
+            <p style="font-size: 19px;">שם היועצת:</p>
+            &nbsp;
+            <p class="header_boldTxt">מיכל ינאי</p>
 
-        <img style="width: 10px;margin-right: 22px;margin-left: 22px;" src="../assets/images/dot.svg">
+            <img style="width: 10px;margin-right: 22px;margin-left: 22px;" src="../assets/images/dot.svg">
 
-        <p style="font-size: 19px;">טלפון:</p>
-        &nbsp;
-        <p class="header_boldTxt">052-6587924555</p>
-
-
-
-    </mat-card>
-
-    <div class="bottom_section">
-
-        <mat-card class="right_section">
-
-            <p class="boldTxt">מוצר נבחר</p>
-            <p>{{productName}}</p>
-
-
-            <p class="boldTxt">סוג פגישה</p>
-            <div class="checkboxDiv">
-                <mat-checkbox (change)="foo(0)">טלפונית</mat-checkbox>
-                <mat-checkbox (change)="foo(1)">וידאו</mat-checkbox>
-                <mat-checkbox (change)="foo(2)">פרונטלית</mat-checkbox>
-            </div>
-            <br>
-
-
-
-            <!-- <p class="boldTxt">סינון לפי תכונות </p> -->
-            <mat-form-field appearance="fill">
-                <mat-label>סינון לפי תכונות</mat-label>
-                <mat-select [formControl]="toppings" multiple>
-                    <mat-option style="direction: rtl;" *ngFor="let topping of toppingList" [value]="topping.id"
-                        (onSelectionChange)="addFoo($event,topping.id)">
-                        {{topping.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <!-- <p class="boldTxt">נותני שירות </p> -->
-            <mat-form-field appearance="fill">
-                <mat-label>נותני שירות</mat-label>
-                <mat-select>
-                    <mat-option style="direction: rtl;" *ngFor="let adviser of advisers" [value]="adviser">{{adviser}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <p class="boldTxt">מידע על היועצת </p>
-            <mat-card style="overflow-y: scroll;background-color: #b3b3b3;">asdasd</mat-card>
-
-            <p class="boldTxt">מיקום </p>
-
+            <p style="font-size: 19px;">טלפון:</p>
+            &nbsp;
+            <p class="header_boldTxt">052-6587924555</p>
 
 
 
         </mat-card>
-        <mat-card class="middle_section">
 
-            <mat-card class="clendarPlaceholder">calendar</mat-card>
-            <mat-card class="meetingResults">
+        <div class="bottom_section">
 
-                <app-meet-component></app-meet-component>
-                <app-meet-component></app-meet-component>
-                <app-meet-component></app-meet-component>
-                <app-meet-component></app-meet-component>
+            <mat-card class="right_section">
+
+                <p class="boldTxt">מוצר נבחר</p>
+                <p>{{selectedProduct}}</p>
+                <br>
+
+                <p class="boldTxt">סוג פגישה</p>
+                <div class="checkboxDiv">
+                    <mat-checkbox (change)="onChangeTypes(0)">טלפונית</mat-checkbox>
+                    <mat-checkbox (change)="onChangeTypes(1)">וידאו</mat-checkbox>
+                    <mat-checkbox (change)="onChangeTypes(2)">פרונטלית</mat-checkbox>
+                </div>
+                <br>
+
+
+
+                <!-- <p class="boldTxt">סינון לפי תכונות </p> -->
+                <mat-form-field appearance="fill">
+                    <mat-label>סינון לפי תכונות</mat-label>
+                    <mat-select formControlName="features" multiple>
+                        <mat-option style="direction: rtl;" *ngFor="let feature of featureList" [value]="feature.id">
+                            {{feature.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- <p class="boldTxt">נותני שירות </p> -->
+                <mat-form-field appearance="fill">
+                    <mat-label>נותני שירות</mat-label>
+                    <mat-select formControlName="adviser">
+                        <mat-option style="direction: rtl;" *ngFor="let adviser of advisers" [value]="adviser">
+                            {{adviser}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <p class="boldTxt">מידע על היועצת </p>
+                <mat-card style="overflow-y: scroll;background-color: #b3b3b3;">asdasd</mat-card>
+                <br>
+                <!-- <p class="boldTxt">מיקום </p> -->
+                <mat-form-field appearance="fill">
+                    <mat-label>מיקום</mat-label>
+                    <mat-select formControlName="places" multiple>
+                        <mat-option style="direction: rtl;" *ngFor="let place of places$|async" [value]="place.id">
+                            {{place.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+
+
+            </mat-card>
+            <mat-card class="middle_section">
+
+                <mat-card class="clendarPlaceholder">calendar</mat-card>
+                <mat-card class="meetingResults">
+
+                    <app-meet-component></app-meet-component>
+                    <app-meet-component></app-meet-component>
+                    <app-meet-component></app-meet-component>
+                    <app-meet-component></app-meet-component>
+                </mat-card>
+
             </mat-card>
 
-        </mat-card>
 
 
 
 
 
+            <mat-card class="left_section">
 
-        <mat-card class="left_section">
+                <p class="boldTxt">קורות חיים</p>
+                <div
+                    style="display: flex;flex-direction: column;background-color: rgb(175, 175, 175);overflow-y: scroll;height: 100px;">
+                    <mat-checkbox>111</mat-checkbox>
+                    <mat-checkbox>222</mat-checkbox>
+                    <mat-checkbox>333</mat-checkbox>
+                </div>
+                <br>
+                <p class="boldTxt">תפקיד</p>
 
-            <button style="height: 50px;width: 100%;" mat-raised-button>Basic</button>
+                <mat-card style="height: 20px;background-color: rgb(175, 175, 175);"></mat-card>
 
-        </mat-card>
+                <button class="header_boldTxt" type=" submit" style="height: 50px;width: 100%;" mat-raised-button>עדכון
+                    פגישה</button>
+
+            </mat-card>
 
 
 
-    </div>
+        </div>
 
-</mat-card>
+    </mat-card>
+</form>

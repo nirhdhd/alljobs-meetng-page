@@ -15,6 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MeetComponentComponent } from '../meet-component/meet-component.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+
 
 
 @NgModule({
@@ -34,7 +36,8 @@ import { MatButtonModule } from '@angular/material/button';
     FormsModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    MatButtonModule
+    MatButtonModule,
+    MatInputModule
 
   ],
   providers: [],
