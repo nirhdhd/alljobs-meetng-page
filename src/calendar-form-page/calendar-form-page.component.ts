@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, AbstractControl, Validators } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, startWith } from 'rxjs/operators';
-
+import { places, featureList, advisers, selectedProduct, Consultants } from './dataDemo'
 //interfaces
 interface Meeting {
   label: string;
@@ -23,6 +23,7 @@ interface FilterData {
   styleUrls: ['./calendar-form-page.component.scss']
 })
 export class CalendarFormPageComponent implements OnInit {
+
   form: FormGroup = new FormGroup({
     types: new FormControl([]),
     features: new FormControl([]),
@@ -33,27 +34,11 @@ export class CalendarFormPageComponent implements OnInit {
 
   selectedProduct: string;
   places: any[];
+  selectedProduct$: Observable<any> = of(selectedProduct);
+  places$: Observable<any> = of(places);
+  featureList: any[] = featureList;
+  advisers: string[] = advisers;
 
-  selectedProduct$: Observable<any> = of({
-    id: 1,
-    name: 'שדרוג קורות חיים'
-  });
-
-  places$: Observable<any> = of([
-    {
-      id: 1,
-      name: 'נתניה'
-    },
-    {
-      id: 2,
-      name: 'חדרה'
-    }
-    ,
-    {
-      id: 3,
-      name: 'רעננה'
-    }]
-  )
 
   constructor() { }
 
@@ -67,28 +52,16 @@ export class CalendarFormPageComponent implements OnInit {
     return this.form.get('adviser');
   }
 
-  featureList: any[] = [
-    { id: 0, name: 'שדרוג עברית' },
-    { id: 1, name: 'שדרוג אנגלית' },
-    { id: 2, name: 'שדרוג הייטק' }
-  ];
+  //toppings = new FormControl();
   selectedTopping: any[] = [];
   productName: string;
-  //toppings = new FormControl();
-  advisers: string[] = [
-    'אביב',
-    'אביבה',
-    'אביה',
-    'בינה',
-    'בל',
-    'בלה',
-    'גאולה',
-    'גאיה',
-    'גבריאל',
-  ];
+
+  consultants = Consultants;
 
 
   ngOnInit(): void {
+
+
     this.productName = "choosenProductName";
     this.types.valueChanges.pipe(
       debounceTime(500),
@@ -100,6 +73,8 @@ export class CalendarFormPageComponent implements OnInit {
     //מוצר נבחר
     this.places$.subscribe(x => { this.places = x });
 
+    //render the meeting list
+    this.form.valueChanges.subscribe((x) => console.log(x));
   }
 
   onChangeTypes(value) {

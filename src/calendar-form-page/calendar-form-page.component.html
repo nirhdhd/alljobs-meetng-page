@@ -89,12 +89,9 @@
                 <mat-card class="clendarPlaceholder">calendar</mat-card>
                 <mat-card class="meetingResults">
 
-                    <app-meet-component></app-meet-component>
-                    <app-meet-component></app-meet-component>
-                    <app-meet-component></app-meet-component>
-                    <app-meet-component></app-meet-component>
-                </mat-card>
+                    <app-meet-component [prop]='con' *ngFor="let con of consultants"></app-meet-component>
 
+                </mat-card>
             </mat-card>
 
 

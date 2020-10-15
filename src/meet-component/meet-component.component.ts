@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-meet-component',
@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./meet-component.component.scss']
 })
 export class MeetComponentComponent implements OnInit {
+  @Input() prop: any;
+  //constructor() { }
 
-  constructor() { }
-
+  //foo;
   ngOnInit(): void {
+    // this.foo = this.prop;
   }
 
 }
